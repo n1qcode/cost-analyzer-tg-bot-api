@@ -1,0 +1,8 @@
+{
+  "HOST_PORT": 8080,
+  "USER": "USER",
+  "PASSWORD": "PASSWORD",
+  "HOST": "localhost",
+  "DB_PORT": 5432,
+  "DATABASE": "DATABASE"
+}
