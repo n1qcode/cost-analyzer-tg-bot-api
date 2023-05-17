@@ -43,8 +43,8 @@ export class CostController {
 
     try {
       await db.query(
-        `ALTER TABLE category
-            ADD COLUMN IF NOT EXISTS ${cost_category} integer`
+        `ALTER TABLE cost
+            ADD COLUMN IF NOT EXISTS ${cost_category} NUMERIC(10, 2) NOT NULL DEFAULT 0.00`
       );
       res.json(`Successfully created new cost category: ${cost_category}`);
     } catch (e) {

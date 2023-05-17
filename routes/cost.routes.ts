@@ -4,7 +4,7 @@ import CostController from "../controller/cost.controller";
 
 const router = Router();
 
-router.post("/cost", CostController.createCostCategory);
+router.put("/cost", CostController.createCostCategory);
 
 router.put("/user/cost/amount", CostController.addToCostCategory);
 
