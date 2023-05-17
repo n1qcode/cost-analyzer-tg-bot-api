@@ -3,10 +3,14 @@ import config from "config";
 
 import costRouter from "../routes/cost.routes";
 
+import loggerMiddleware from "./utils/loggerMiddleware";
+
 const PORT = config.get("HOST_PORT");
 
 const app: Express = express();
 
+app.use(loggerMiddleware);
+app.use(express.json());
 app.use("/api", costRouter);
 
 app.listen(PORT, () =>
