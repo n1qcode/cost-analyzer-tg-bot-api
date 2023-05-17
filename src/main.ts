@@ -1,6 +1,7 @@
 import express, { Express } from "express";
 import config from "config";
 
+import userRoutes from "../routes/user.routes";
 import costRouter from "../routes/cost.routes";
 
 import loggerMiddleware from "./utils/loggerMiddleware";
@@ -11,6 +12,7 @@ const app: Express = express();
 
 app.use(loggerMiddleware);
 app.use(express.json());
+app.use("/api", userRoutes);
 app.use("/api", costRouter);
 
 app.listen(PORT, () =>

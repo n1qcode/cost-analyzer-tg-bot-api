@@ -4,14 +4,9 @@ import CostController from "../controller/cost.controller";
 
 const router = Router();
 
-router.post("/user", CostController.createUser);
-router.post("/cost", CostController.createCost);
+router.post("/cost", CostController.createCostCategory);
 
-router.put("/user", CostController.updateUser);
-
-router.put("/user/cost/amount", CostController.addToCost);
-
-router.get("/users", CostController.getUsers);
+router.put("/user/cost/amount", CostController.addToCostCategory);
 
 router.get("/user/:id/cost/current", CostController.getCurrentDayCostOfUser);
 router.get("/cost/current", CostController.getCurrentDayCost);
