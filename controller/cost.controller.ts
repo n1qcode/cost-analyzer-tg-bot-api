@@ -4,15 +4,15 @@ import { db } from "../src/db";
 
 export class CostController {
   async createUser(req: Request, res: Response) {
+    const { name } = req.body;
     try {
-      const { name } = req.body;
-      const newPerson = await db.query(
+      const user = await db.query(
         "INSERT INTO person (name) values ($1) RETURNING *",
         [name]
       );
-      res.json(newPerson.rows[0]);
+      res.json(user.rows[0]);
     } catch (e) {
-      res.json("Erorr ...");
+      res.json(`Error while trying create user: ${name}`);
     }
   }
   async createCost(req: Request, res: Response) {
@@ -63,6 +63,18 @@ export class CostController {
       res.json(`Error while creating new cost category: ${cost_category}`);
     }
   }
+  async updateUser(req: Request, res: Response) {
+    const { id, name } = req.body;
+    try {
+      const user = await db.query(
+        "UPDATE person set name = $1 where id = $2 RETURNING *",
+        [name, id]
+      );
+      res.json(user.rows[0]);
+    } catch (e) {
+      res.json(`Error while trying update user: ${name}`);
+    }
+  }
   async addToCost(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
@@ -75,91 +87,91 @@ export class CostController {
       const users = await db.query("SELECT * from person");
       res.json(users.rows);
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getCurrentDayCostOfUser(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getCurrentDayCost(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getAllCostOfUser(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getAllCost(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getYearCostOfUser(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getYearCost(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getSeasonCostOfUser(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getSeasonCost(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getMonthCostOfUser(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getMonthCost(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getPeriodCostOfUser(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
   async getPeriodCost(req: Request, res: Response) {
     try {
       res.json("Successfully ...");
     } catch (e) {
-      res.json("Erorr ...");
+      res.json("Error ...");
     }
   }
 }
