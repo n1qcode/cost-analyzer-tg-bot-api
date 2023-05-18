@@ -4,43 +4,7 @@ import { db } from "../src/db";
 
 export class CostController {
   async createCostCategory(req: Request, res: Response) {
-    // const months = [
-    //   "January",
-    //   "February",
-    //   "March",
-    //   "April",
-    //   "May",
-    //   "June",
-    //   "July",
-    //   "August",
-    //   "September",
-    //   "October",
-    //   "November",
-    //   "December",
-    // ];
-    // const seasons = [
-    //   "Winter",
-    //   "Winter",
-    //   "Spring",
-    //   "Spring",
-    //   "Spring",
-    //   "Summer",
-    //   "Summer",
-    //   "Summer",
-    //   "Autumn",
-    //   "Autumn",
-    //   "Autumn",
-    //   "Winter",
-    // ];
-
-    // const date = new Date();
-    // const year = String(date.getFullYear());
-    // const season = seasons[date.getMonth()];
-    // const month = months[date.getMonth()];
-    // const day = String(date.getUTCDate());
-
     const { cost_category } = req.body;
-
     try {
       await db.query(
         `ALTER TABLE cost
@@ -52,10 +16,45 @@ export class CostController {
     }
   }
   async addToCostCategory(req: Request, res: Response) {
+    const { user_id, cost_category, cost_amount } = req.body;
+
+    const seasons = [
+      "Winter",
+      "Winter",
+      "Spring",
+      "Spring",
+      "Spring",
+      "Summer",
+      "Summer",
+      "Summer",
+      "Autumn",
+      "Autumn",
+      "Autumn",
+      "Winter",
+    ];
+
+    const date = new Date();
+    const cost_date = date.toISOString().split("T")[0];
+    const season = seasons[date.getMonth()];
+
     try {
-      res.json("Successfully ...");
+      const checkCostExist = await db.query(
+        "SELECT * FROM cost WHERE cost_date = $1 AND user_id = $2",
+        [cost_date, user_id]
+      );
+      if (!checkCostExist.rowCount) {
+        await db.query(
+          "INSERT INTO cost (cost_date, season, user_id) values ($1, $2, $3) RETURNING *",
+          [cost_date, season, user_id]
+        );
+      }
+      const updateCost = await db.query(
+        `UPDATE cost SET ${cost_category} = ${cost_category} + $1 WHERE cost_date = $2  AND user_id = $3 RETURNING *`,
+        [cost_amount, cost_date, user_id]
+      );
+      res.json(`${cost_category} : ${updateCost.rows[0][cost_category]}`);
     } catch (e) {
-      res.json("Erorr ...");
+      res.json(`${e}`);
     }
   }
   async getCurrentDayCostOfUser(req: Request, res: Response) {
