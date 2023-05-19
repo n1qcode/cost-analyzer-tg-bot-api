@@ -29,4 +29,6 @@ router.get("/cost/day/:date", CostController.getDayCost);
 router.get("/user/:id/cost/:start/:end", CostController.getPeriodCostOfUser);
 router.get("/cost/:start/:end", CostController.getPeriodCost);
 
+router.get("/cost/categories", CostController.getCostCategories);
+
 export default router;
