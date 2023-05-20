@@ -173,7 +173,6 @@ export class CostController {
         categories.rows
           .map((item) => item.column_name)
           .filter((cat) => cat.substring(0, 3) === "cat")
-          .map((cat) => cat.substring(4))
       );
     } catch (e) {
       res.json("Error ...");
