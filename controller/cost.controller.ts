@@ -57,23 +57,9 @@ export class CostController {
       res.json(`${e}`);
     }
   }
-  async getAllCostOfUser(req: Request, res: Response) {
-    try {
-      res.json("Successfully ...");
-    } catch (e) {
-      res.json("Error ...");
-    }
-  }
   async getAllCost(req: Request, res: Response) {
     try {
       res.json("Successfully getAllCost ...");
-    } catch (e) {
-      res.json("Error ...");
-    }
-  }
-  async getYearCostOfUser(req: Request, res: Response) {
-    try {
-      res.json("Successfully getYearCostOfUser ...");
     } catch (e) {
       res.json("Error ...");
     }
@@ -85,31 +71,11 @@ export class CostController {
       res.json("Error ...");
     }
   }
-  async getSeasonCostOfUser(req: Request, res: Response) {
-    try {
-      res.json("Successfully getSeasonCostOfUser ...");
-    } catch (e) {
-      res.json("Error ...");
-    }
-  }
   async getSeasonCost(req: Request, res: Response) {
     try {
       res.json("Successfully getSeasonCost ...");
     } catch (e) {
       res.json("Error ...");
-    }
-  }
-  async getMonthCostOfUser(req: Request, res: Response) {
-    const { id, year, month } = req.params;
-    const dateVal = `${year}-${month}%`;
-    try {
-      const cost = await db.query(
-        "SELECT * FROM cost WHERE CAST(cost_date AS TEXT) LIKE $1 AND user_id = $2",
-        [dateVal, id]
-      );
-      res.json(cost.rows);
-    } catch (e) {
-      res.json(`${e}`);
     }
   }
   async getMonthCost(req: Request, res: Response) {
@@ -125,19 +91,6 @@ export class CostController {
       res.json(e);
     }
   }
-  async getDayCostOfUser(req: Request, res: Response) {
-    const { id, date } = req.params;
-    const dateVal = `${date}%`;
-    try {
-      const cost = await db.query(
-        "SELECT * FROM cost WHERE CAST(cost_date AS TEXT) LIKE $1 AND user_id = $2",
-        [dateVal, id]
-      );
-      res.json(cost.rows);
-    } catch (e) {
-      res.json(`${e}`);
-    }
-  }
   async getDayCost(req: Request, res: Response) {
     const { date } = req.params;
     try {
@@ -148,13 +101,6 @@ export class CostController {
       res.json(cost.rows);
     } catch (e) {
       res.json(`${e}`);
-    }
-  }
-  async getPeriodCostOfUser(req: Request, res: Response) {
-    try {
-      res.json("Successfully getPeriodCostOfUser ...");
-    } catch (e) {
-      res.json("Error ...");
     }
   }
   async getPeriodCost(req: Request, res: Response) {
