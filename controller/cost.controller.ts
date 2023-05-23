@@ -4,11 +4,15 @@ import { db } from "../src/db";
 
 export class CostController {
   async createCostCategory(req: Request, res: Response) {
-    const { cost_category } = req.body;
+    const { cost_category, translation } = req.body;
     try {
       await db.query(
         `ALTER TABLE cost
             ADD COLUMN IF NOT EXISTS ${cost_category} NUMERIC(10, 2) NOT NULL DEFAULT 0.00`
+      );
+      await db.query(
+        `ALTER TABLE translation
+            ADD COLUMN IF NOT EXISTS ${cost_category} TEXT NOT NULL DEFAULT '${translation}'`
       );
       res.json(`Successfully created new cost category: ${cost_category}`);
     } catch (e) {
@@ -16,7 +20,7 @@ export class CostController {
     }
   }
   async addToCostCategory(req: Request, res: Response) {
-    const { user_id, cost_category, cost_amount } = req.body;
+    const { cost_category, cost_amount } = req.body;
 
     const seasons = [
       "winter",
@@ -39,18 +43,18 @@ export class CostController {
 
     try {
       const checkCostExist = await db.query(
-        "SELECT * FROM cost WHERE cost_date = $1 AND user_id = $2",
-        [cost_date, user_id]
+        "SELECT * FROM cost WHERE cost_date = $1",
+        [cost_date]
       );
       if (!checkCostExist.rowCount) {
         await db.query(
-          "INSERT INTO cost (cost_date, season, user_id) values ($1, $2, $3) RETURNING *",
-          [cost_date, season, user_id]
+          "INSERT INTO cost (cost_date, season) values ($1, $2) RETURNING *",
+          [cost_date, season]
         );
       }
       const updateCost = await db.query(
-        `UPDATE cost SET ${cost_category} = ${cost_category} + $1 WHERE cost_date = $2  AND user_id = $3 RETURNING *`,
-        [cost_amount, cost_date, user_id]
+        `UPDATE cost SET ${cost_category} = ${cost_category} + $1 WHERE cost_date = $2 RETURNING *`,
+        [cost_amount, cost_date]
       );
       res.json(`${cost_category} : ${updateCost.rows[0][cost_category]}`);
     } catch (e) {
