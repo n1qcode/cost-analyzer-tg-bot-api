@@ -23,6 +23,17 @@ export class TranslationController {
     const { cost_category, translation } = req.body;
     try {
       await db.query(
+        `ALTER TABLE translation
+              ADD COLUMN IF NOT EXISTS ${cost_category} TEXT NOT NULL`
+      );
+      const checkTranslationExist = await db.query("SELECT * FROM translation");
+      if (!checkTranslationExist.rowCount) {
+        await db.query(
+          `INSERT INTO translation (${cost_category}) values ($1) RETURNING *`,
+          [cost_category]
+        );
+      }
+      await db.query(
         `UPDATE translation set ${cost_category} = '${translation}' where id = 1 RETURNING *`
       );
       res.json(

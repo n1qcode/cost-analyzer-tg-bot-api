@@ -14,6 +14,13 @@ export class CostController {
         `ALTER TABLE translation
             ADD COLUMN IF NOT EXISTS ${cost_category} TEXT NOT NULL DEFAULT '${translation}'`
       );
+      const checkTranslationExist = await db.query("SELECT * FROM translation");
+      if (!checkTranslationExist.rowCount) {
+        await db.query(
+          `INSERT INTO translation (${cost_category}) values ($1) RETURNING *`,
+          [translation]
+        );
+      }
       res.json(`Successfully created new cost category: ${cost_category}`);
     } catch (e) {
       res.json(`Error while creating new cost category: ${cost_category}`);
