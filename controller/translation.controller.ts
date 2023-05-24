@@ -24,7 +24,7 @@ export class TranslationController {
     try {
       await db.query(
         `ALTER TABLE translation
-              ADD COLUMN IF NOT EXISTS ${cost_category} TEXT NOT NULL`
+              ADD COLUMN IF NOT EXISTS ${cost_category} TEXT NOT NULL DEFAULT '${cost_category}'`
       );
       const checkTranslationExist = await db.query("SELECT * FROM translation");
       if (!checkTranslationExist.rowCount) {
