@@ -7,7 +7,6 @@ import TranslationRouter from "../routes/translation.routes";
 
 import loggerMiddleware from "./utils/loggerMiddleware";
 
-const HOST = config.get("HOST");
 const PORT = config.get("HOST_PORT");
 
 const app: Express = express();
@@ -19,5 +18,5 @@ app.use("/api", costRouter);
 app.use("/api", TranslationRouter);
 
 app.listen(PORT, () =>
-  console.log(`⚡️[server]: Server is running at http://${HOST}:${PORT}`)
+  console.log(`⚡️[server]: Server is running at port: ${PORT}`)
 );
