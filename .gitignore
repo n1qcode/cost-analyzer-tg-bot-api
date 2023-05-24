@@ -1,5 +1,6 @@
 /node_modules
 /dist
 /config/default.json
+/config/production.json
 
 db.sql
