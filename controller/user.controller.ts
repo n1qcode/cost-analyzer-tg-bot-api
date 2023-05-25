@@ -32,7 +32,7 @@ export class UserController {
       const users = await db.query("SELECT * from person");
       res.json(users.rows);
     } catch (e) {
-      res.json("Error ...");
+      res.json("Error while getting users");
     }
   }
 }

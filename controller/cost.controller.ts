@@ -72,21 +72,21 @@ export class CostController {
     try {
       res.json("Successfully getAllCost ...");
     } catch (e) {
-      res.json("Error ...");
+      res.json("Error while getting all cost");
     }
   }
   async getYearCost(req: Request, res: Response) {
     try {
       res.json("Successfully getYearCost ...");
     } catch (e) {
-      res.json("Error ...");
+      res.json("Error while getting cost of year");
     }
   }
   async getSeasonCost(req: Request, res: Response) {
     try {
       res.json("Successfully getSeasonCost ...");
     } catch (e) {
-      res.json("Error ...");
+      res.json("Error while getting cost of season");
     }
   }
   async getMonthCost(req: Request, res: Response) {
@@ -99,7 +99,7 @@ export class CostController {
       );
       res.json(cost.rows);
     } catch (e) {
-      res.json(e);
+      res.json(`Error while getting cost of month(${year}-${month}): ${e}`);
     }
   }
   async getDayCost(req: Request, res: Response) {
@@ -111,14 +111,14 @@ export class CostController {
       );
       res.json(cost.rows);
     } catch (e) {
-      res.json(`${e}`);
+      res.json(`Error while getting cost of day(${date}): ${e}`);
     }
   }
   async getPeriodCost(req: Request, res: Response) {
     try {
       res.json("Successfully getPeriodCost ...");
     } catch (e) {
-      res.json("Error ...");
+      res.json("Error while getting cost of period");
     }
   }
   async getCostCategories(req: Request, res: Response) {
@@ -132,7 +132,7 @@ export class CostController {
           .filter((cat) => cat.substring(0, 3) === "cat")
       );
     } catch (e) {
-      res.json("Error ...");
+      res.json("Error while getting cost categories");
     }
   }
 }
