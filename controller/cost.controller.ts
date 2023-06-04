@@ -59,6 +59,19 @@ export class CostController {
           [cost_date, season]
         );
       }
+      const checkFrequencyExist = await db.query(
+        "SELECT * FROM frequency WHERE category = $1",
+        [cost_category]
+      );
+      if (!checkFrequencyExist.rowCount) {
+        await db.query("INSERT INTO frequency (category) values ($1)", [
+          cost_category,
+        ]);
+      }
+      await db.query(
+        "UPDATE frequency SET count = count + 1 WHERE category = $1",
+        [cost_category]
+      );
       const updateCost = await db.query(
         `UPDATE cost SET ${cost_category} = ${cost_category} + $1 WHERE cost_date = $2 RETURNING *`,
         [cost_amount, cost_date]
