@@ -83,7 +83,8 @@ export class CostController {
   }
   async getAllCost(req: Request, res: Response) {
     try {
-      res.json("Successfully getAllCost ...");
+      const allCost = await db.query("SELECT * from cost");
+      res.json(allCost.rows);
     } catch (e) {
       res.json("Error while getting all cost");
     }
