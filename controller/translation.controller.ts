@@ -10,13 +10,14 @@ export class TranslationController {
         `ALTER TABLE translation
             ADD COLUMN IF NOT EXISTS ${cost_category} TEXT NOT NULL DEFAULT '${translation}'`
       );
-      res.json(
-        `Successfully created new translation of cost category: ${cost_category} - ${translation}`
-      );
+      res.json({
+        payload: translation,
+      });
     } catch (e) {
-      res.json(
-        `Error while creating new translation of cost category: ${cost_category} - ${translation}`
-      );
+      res.json({
+        isError: true,
+        payload: `Error while creating new translation of cost category: ${cost_category} - ${translation}`,
+      });
     }
   }
   async updateTranslationCostCategory(req: Request, res: Response) {
@@ -36,13 +37,14 @@ export class TranslationController {
       await db.query(
         `UPDATE translation set ${cost_category} = '${translation}' where id = 1 RETURNING *`
       );
-      res.json(
-        `Successfully updated translation of cost category: ${cost_category} to ${translation}!`
-      );
+      res.json({
+        payload: translation,
+      });
     } catch (e) {
-      res.json(
-        `Error while updating translation of cost category: ${cost_category} to ${translation}`
-      );
+      res.json({
+        isError: true,
+        payload: `Error while updating translation of cost category: ${cost_category} to ${translation}`,
+      });
     }
   }
   async getTranslationCostCategory(req: Request, res: Response) {
@@ -50,9 +52,14 @@ export class TranslationController {
       const translation = await db.query(
         "SELECT * from translation where id = 1"
       );
-      res.json(translation.rows[0]);
+      res.json({
+        payload: translation.rows[0],
+      });
     } catch (e) {
-      res.json("Error while getting translation of cost categories");
+      res.json({
+        isError: true,
+        payload: "Error while getting translation of cost categories",
+      });
     }
   }
 }
