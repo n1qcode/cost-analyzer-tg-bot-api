@@ -21,9 +21,14 @@ export class CostController {
           [translation]
         );
       }
-      res.json(`Successfully created new cost category: ${cost_category}`);
+      res.json({
+        payload: `Successfully created new cost category: ${cost_category}`,
+      });
     } catch (e) {
-      res.json(`Error while creating new cost category: ${cost_category}`);
+      res.json({
+        isError: true,
+        payload: `Error while creating new cost category: ${cost_category}. ${e}`,
+      });
     }
   }
   async addToCostCategory(req: Request, res: Response) {
@@ -76,31 +81,49 @@ export class CostController {
         `UPDATE cost SET ${cost_category} = ${cost_category} + $1 WHERE cost_date = $2 RETURNING *`,
         [cost_amount, cost_date]
       );
-      res.json(`${cost_category} : ${updateCost.rows[0][cost_category]}`);
+      res.json({
+        payload: `${cost_category} : ${updateCost.rows[0][cost_category]}`,
+      });
     } catch (e) {
-      res.json(`${e}`);
+      res.json({
+        isError: true,
+        payload: `Error while add cost to cost category: ${cost_category}. ${e}`,
+      });
     }
   }
   async getAllCost(req: Request, res: Response) {
     try {
       const allCost = await db.query("SELECT * from cost");
-      res.json(allCost.rows);
+      res.json({ payload: allCost.rows });
     } catch (e) {
-      res.json("Error while getting all cost");
+      res.json({
+        isError: true,
+        payload: `Error while getting all cost. ${e}`,
+      });
     }
   }
   async getYearCost(req: Request, res: Response) {
     try {
-      res.json("Successfully getYearCost ...");
+      res.json({
+        payload: "Successfully getYearCost ...",
+      });
     } catch (e) {
-      res.json("Error while getting cost of year");
+      res.json({
+        isError: true,
+        payload: `Error while getting cost of year. ${e}`,
+      });
     }
   }
   async getSeasonCost(req: Request, res: Response) {
     try {
-      res.json("Successfully getSeasonCost ...");
+      res.json({
+        payload: "Successfully getSeasonCost ...",
+      });
     } catch (e) {
-      res.json("Error while getting cost of season");
+      res.json({
+        isError: true,
+        payload: `Error while getting cost of season. ${e}`,
+      });
     }
   }
   async getMonthCost(req: Request, res: Response) {
@@ -111,9 +134,14 @@ export class CostController {
         "SELECT * FROM cost WHERE CAST(cost_date AS TEXT) LIKE $1",
         [dateVal]
       );
-      res.json(cost.rows);
+      res.json({
+        payload: cost.rows,
+      });
     } catch (e) {
-      res.json(`Error while getting cost of month(${year}-${month}): ${e}`);
+      res.json({
+        isError: true,
+        payload: `Error while getting cost of month(${year}-${month}): ${e}`,
+      });
     }
   }
   async getDayCost(req: Request, res: Response) {
@@ -123,16 +151,26 @@ export class CostController {
         "SELECT * FROM cost WHERE CAST(cost_date AS TEXT) LIKE $1",
         [date]
       );
-      res.json(cost.rows);
+      res.json({
+        payload: cost.rows,
+      });
     } catch (e) {
-      res.json(`Error while getting cost of day(${date}): ${e}`);
+      res.json({
+        isError: true,
+        payload: `Error while getting cost of day(${date}): ${e}`,
+      });
     }
   }
   async getPeriodCost(req: Request, res: Response) {
     try {
-      res.json("Successfully getPeriodCost ...");
+      res.json({
+        payload: "Successfully getPeriodCost ...",
+      });
     } catch (e) {
-      res.json("Error while getting cost of period");
+      res.json({
+        isError: true,
+        payload: `Error while getting cost of period. ${e}`,
+      });
     }
   }
   async getCostCategories(req: Request, res: Response) {
@@ -140,13 +178,16 @@ export class CostController {
       const categories = await db.query(
         "SELECT column_name FROM information_schema.columns WHERE table_name = 'cost';"
       );
-      res.json(
-        categories.rows
+      res.json({
+        payload: categories.rows
           .map((item) => item.column_name)
-          .filter((cat) => cat.substring(0, 3) === "cat")
-      );
+          .filter((cat) => cat.substring(0, 3) === "cat"),
+      });
     } catch (e) {
-      res.json("Error while getting cost categories");
+      res.json({
+        isError: true,
+        payload: `Error while getting cost categories. ${e}`,
+      });
     }
   }
 }

@@ -6,9 +6,14 @@ class FrequencyController {
   async getCategoriesByFrequency(req: Request, res: Response) {
     try {
       const frequency = await db.query("SELECT * from frequency");
-      res.json(frequency.rows);
+      res.json({
+        payload: frequency.rows,
+      });
     } catch (e) {
-      res.json("Error while getting categories by frequency");
+      res.json({
+        isError: true,
+        payload: `Error while getting categories by frequency. ${e}`,
+      });
     }
   }
 }

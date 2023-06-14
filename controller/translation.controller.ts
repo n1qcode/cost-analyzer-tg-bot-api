@@ -58,7 +58,7 @@ export class TranslationController {
     } catch (e) {
       res.json({
         isError: true,
-        payload: "Error while getting translation of cost categories",
+        payload: `Error while getting translation of cost categories. ${e}`,
       });
     }
   }
