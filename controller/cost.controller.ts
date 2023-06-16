@@ -82,7 +82,7 @@ export class CostController {
         [cost_amount, cost_date]
       );
       res.json({
-        payload: `${cost_category} : ${updateCost.rows[0][cost_category]}`,
+        payload: updateCost.rows[0][cost_category],
       });
     } catch (e) {
       res.json({
