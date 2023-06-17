@@ -50,7 +50,17 @@ export class CostController {
     ];
 
     const date = new Date();
-    const cost_date = date.toISOString().split("T")[0];
+    const dateOptions = {
+      timeZone: "Europe/Moscow",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    } as const;
+    const cost_date = date
+      .toLocaleDateString("ru-RU", dateOptions)
+      .split(".")
+      .reverse()
+      .join("-");
     const season = seasons[date.getMonth()];
 
     try {
