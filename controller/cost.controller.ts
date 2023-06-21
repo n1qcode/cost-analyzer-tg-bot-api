@@ -26,8 +26,7 @@ export class CostController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while creating new cost category: ${cost_category}. ${e}`,
+        error: `Error while creating new cost category: ${cost_category}. ${e}`,
       });
     }
   }
@@ -96,8 +95,7 @@ export class CostController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while add cost to cost category: ${cost_category}. ${e}`,
+        error: `Error while add cost to cost category: ${cost_category}. ${e}`,
       });
     }
   }
@@ -107,8 +105,7 @@ export class CostController {
       res.json({ payload: allCost.rows });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while getting all cost. ${e}`,
+        error: `Error while getting all cost. ${e}`,
       });
     }
   }
@@ -119,8 +116,7 @@ export class CostController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while getting cost of year. ${e}`,
+        error: `Error while getting cost of year. ${e}`,
       });
     }
   }
@@ -131,8 +127,7 @@ export class CostController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while getting cost of season. ${e}`,
+        error: `Error while getting cost of season. ${e}`,
       });
     }
   }
@@ -149,8 +144,7 @@ export class CostController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while getting cost of month(${year}-${month}): ${e}`,
+        error: `Error while getting cost of month(${year}-${month}): ${e}`,
       });
     }
   }
@@ -166,8 +160,7 @@ export class CostController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while getting cost of day(${date}): ${e}`,
+        error: `Error while getting cost of day(${date}): ${e}`,
       });
     }
   }
@@ -178,8 +171,7 @@ export class CostController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while getting cost of period. ${e}`,
+        error: `Error while getting cost of period. ${e}`,
       });
     }
   }
@@ -195,8 +187,7 @@ export class CostController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while getting cost categories. ${e}`,
+        error: `Error while getting cost categories. ${e}`,
       });
     }
   }

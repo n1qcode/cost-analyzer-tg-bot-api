@@ -15,8 +15,7 @@ export class TranslationController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while creating new translation of cost category: ${cost_category} - ${translation}`,
+        error: `Error while creating new translation of cost category: ${cost_category} - ${translation}`,
       });
     }
   }
@@ -42,8 +41,7 @@ export class TranslationController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while updating translation of cost category: ${cost_category} to ${translation}`,
+        error: `Error while updating translation of cost category: ${cost_category} to ${translation}`,
       });
     }
   }
@@ -57,8 +55,7 @@ export class TranslationController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while getting translation of cost categories. ${e}`,
+        error: `Error while getting translation of cost categories. ${e}`,
       });
     }
   }

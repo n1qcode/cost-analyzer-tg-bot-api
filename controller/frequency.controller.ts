@@ -11,8 +11,7 @@ class FrequencyController {
       });
     } catch (e) {
       res.json({
-        isError: true,
-        payload: `Error while getting categories by frequency. ${e}`,
+        error: `Error while getting categories by frequency. ${e}`,
       });
     }
   }
