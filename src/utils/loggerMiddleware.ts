@@ -1,5 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 
+const _fix = (value: number) => {
+  return String(value).padStart(2, "0");
+};
+
 const loggerMiddleware = (
   request: Request,
   response: Response,
@@ -12,10 +16,13 @@ const loggerMiddleware = (
   const hours = currentDate.getHours();
   const minutes = currentDate.getMinutes();
   const seconds = currentDate.getSeconds();
-  const monthFixed = `${+month + 1 < 11 ? "0" : ""}${month + 1}`;
 
   console.log(
-    `LOGGER::[${year}.${monthFixed}.${day} ${hours}:${minutes}:${seconds}] --- ${request.method} ${request.path}`
+    `LOGGER::[${year}.${_fix(month + 1)}.${_fix(day)} ${_fix(hours)}:${_fix(
+      minutes
+    )}:${_fix(seconds)}]::["user-agent": ${request.headers["user-agent"]}]::[${
+      request.method
+    }: ${request.path}]`
   );
   next();
 };
