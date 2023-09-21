@@ -29,6 +29,22 @@ export class UsersController {
       });
     }
   }
+  async setUserFinanceInfo(req: Request, res: Response) {
+    const { userId, lastPlace, currency } = req.body;
+    try {
+      await db.query(
+        "UPDATE users SET last_place = $2, currency = $3  WHERE user_id = $1",
+        [userId, lastPlace, currency]
+      );
+      res.json({
+        payload: null,
+      });
+    } catch (e) {
+      res.json({
+        error: `Error while setting user place. ${e}`,
+      });
+    }
+  }
   async setLastUserPlace(req: Request, res: Response) {
     const { userId, lastPlace } = req.body;
     try {
