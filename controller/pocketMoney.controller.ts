@@ -38,6 +38,13 @@ export class PocketMoneyController {
   async takeMoneyFromPocketMoney(req: Request, res: Response) {
     const { sum, currency } = req.body;
     try {
+      const existedCurrency = await db.query(
+        `SELECT ${currency} from pocket_money`
+      );
+      const existedValue = Number(existedCurrency.rows[0][currency]);
+      if (existedValue === 0 || existedValue - sum <= 0) {
+        throw new Error("ZERO");
+      }
       const total = await db.query(
         `UPDATE pocket_money SET ${currency} = ${currency} - $1 RETURNING *`,
         [sum]

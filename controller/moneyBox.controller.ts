@@ -38,6 +38,13 @@ export class MoneyBoxController {
   async takeMoneyFromMoneyBox(req: Request, res: Response) {
     const { sum, currency } = req.body;
     try {
+      const existedCurrency = await db.query(
+        `SELECT ${currency} from money_box`
+      );
+      const existedValue = Number(existedCurrency.rows[0][currency]);
+      if (existedValue === 0 || existedValue - sum <= 0) {
+        throw new Error("ZERO");
+      }
       const total = await db.query(
         `UPDATE money_box SET ${currency} = ${currency} - $1 RETURNING *`,
         [sum]
