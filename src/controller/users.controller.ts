@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { db } from "../src/db";
+import { db } from "../db";
 
 export class UsersController {
   async getLastUsersPlaces(req: Request, res: Response) {

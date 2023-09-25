@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { db } from "../src/db";
+import { db } from "../db";
 
 export class CostController {
   async createCostCategory(req: Request, res: Response) {
