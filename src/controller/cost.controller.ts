@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import { db } from "../db";
+import { SEASONS } from "../utils/constants";
 
 export class CostController {
   async createCostCategory(req: Request, res: Response) {
@@ -33,21 +34,6 @@ export class CostController {
   async addToCostCategory(req: Request, res: Response) {
     const { cost_category, cost_amount } = req.body;
 
-    const seasons = [
-      "winter",
-      "winter",
-      "spring",
-      "spring",
-      "spring",
-      "summer",
-      "summer",
-      "summer",
-      "autumn",
-      "autumn",
-      "autumn",
-      "winter",
-    ];
-
     const date = new Date();
     const dateOptions = {
       timeZone: "Europe/Moscow",
@@ -60,7 +46,7 @@ export class CostController {
       .split(".")
       .reverse()
       .join("-");
-    const season = seasons[date.getMonth()];
+    const season = SEASONS[date.getMonth()];
 
     try {
       const checkCostExist = await db.query(
