@@ -5,6 +5,10 @@ import MoneyBoxController from "../controller/moneyBox.controller";
 const router = Router();
 
 router.get("/finance/money_box", MoneyBoxController.getInfoOfMoneyBox);
+router.get(
+  "/finance/money_box_transactions/:date_start/:date_end",
+  MoneyBoxController.getTransactionsFromPeriod
+);
 router.put("/finance/money_box/put", MoneyBoxController.putMoneyToMoneyBox);
 router.put("/finance/money_box/take", MoneyBoxController.takeMoneyFromMoneyBox);
 

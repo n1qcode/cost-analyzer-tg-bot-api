@@ -135,6 +135,23 @@ export class MoneyBoxController {
       });
     }
   }
+  async getTransactionsFromPeriod(req: Request, res: Response) {
+    const { date_start, date_end } = req.params;
+    try {
+      const transactions = await db.query(
+        "SELECT * FROM money_box_transactions WHERE transaction_date BETWEEN $1 AND $2",
+        [date_start, date_end]
+      );
+
+      res.json({
+        payload: transactions.rows,
+      });
+    } catch (e) {
+      res.json({
+        error: `Error while taking money from money box. ${e}`,
+      });
+    }
+  }
 }
 
 export default new MoneyBoxController();
