@@ -136,11 +136,14 @@ export class MoneyBoxController {
     }
   }
   async getTransactionsFromPeriod(req: Request, res: Response) {
-    const { date_start, date_end } = req.params;
+    const { year, month } = req.params;
+
+    const dateVal = `${year}-${month}%`;
+
     try {
       const transactions = await db.query(
-        "SELECT * FROM money_box_transactions WHERE transaction_date BETWEEN $1 AND $2",
-        [date_start, date_end]
+        "SELECT * FROM money_box_transactions WHERE CAST(transaction_date AS TEXT) LIKE $1",
+        [dateVal]
       );
 
       res.json({

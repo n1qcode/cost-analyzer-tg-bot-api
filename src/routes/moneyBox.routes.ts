@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/finance/money_box", MoneyBoxController.getInfoOfMoneyBox);
 router.get(
-  "/finance/money_box_transactions/:date_start/:date_end",
+  "/finance/money_box_transactions/:year/:month",
   MoneyBoxController.getTransactionsFromPeriod
 );
 router.put("/finance/money_box/put", MoneyBoxController.putMoneyToMoneyBox);
